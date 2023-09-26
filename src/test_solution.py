@@ -9,8 +9,6 @@ def client():
         app.config['TESTING'] = True
 
         with app.test_client() as client:
-            # with app.app_context():
-            #     app.init_db()
             yield client
 
         os.close(db_fd)
@@ -25,7 +23,7 @@ def test_first_three(client):
 @pytest.mark.it("Implement method POST /member to add a new member")
 def test_add_implementation(client):
     response = client.post('/member', json={
-		"first_name": "Tommy",
+		"first_name": "Tito",
         "id": 3443,
 		"age": 23,
 		"lucky_numbers": [34,65,23,4,6]
@@ -35,7 +33,7 @@ def test_add_implementation(client):
 @pytest.mark.it("Method POST /member should return something, NOT EMPTY")
 def test_add_empty_reponse_body(client):
     response = client.post('/member', json={
-		"first_name": "Sandra",
+		"first_name": "Katherine",
 		"age": 12,
         "id": 4446,
 		"lucky_numbers": [12,34,33,45,32,12]
@@ -82,13 +80,13 @@ def test_get_single_member_has_keys(client):
     assert "age" in data
     assert "lucky_numbers" in data
 
-@pytest.mark.it("Method GET /member/3443 should return Tommy")
-def test_get_first_member_tommy(client):
+@pytest.mark.it("Method GET /member/3443 should return Tito")
+def test_get_first_member_tito(client):
     response = client.get('/member/3443')
     data = json.loads(response.data)
     assert data is not None
     assert "first_name" in data
-    assert data["first_name"] == "Tommy"
+    assert data["first_name"] == "Tito"
 
 @pytest.mark.it("Implement method DELETE /member/<int:id> to delete a family member")
 def test_delete_member(client):
@@ -98,7 +96,7 @@ def test_delete_member(client):
 @pytest.mark.it("Method DELETE /member/3443 should return dictionary with 'done' key")
 def test_delete_response(client):
     client.post('/member', json={
-		"first_name": "Tommy",
+		"first_name": "Tito",
         "id": 3443,
 		"age": 23,
 		"lucky_numbers": [34,65,23,4,6]
